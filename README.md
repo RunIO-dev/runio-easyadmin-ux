@@ -1,5 +1,8 @@
 # EasyAdmin UX Bundle
 
+[![CI](https://github.com/RunIO-dev/runio-easyadmin-ux/actions/workflows/ci.yml/badge.svg)](https://github.com/RunIO-dev/runio-easyadmin-ux/actions/workflows/ci.yml)
+[![Packagist](https://img.shields.io/packagist/v/runio/easyadmin-ux)](https://packagist.org/packages/runio/easyadmin-ux)
+
 An add-on for EasyAdmin 5. It does not fork or patch EasyAdmin.
 
 - Four layouts that each user can switch between: Sidebar, Compact, Top navigation, and Focus.

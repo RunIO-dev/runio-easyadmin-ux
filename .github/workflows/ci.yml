@@ -1,0 +1,124 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Unit (PHP ${{ matrix.php }}, ${{ matrix.dependencies }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Lowest versions: Symfony 6.4, Doctrine ORM 2.20, DBAL 3.
+          - php: '8.2'
+            dependencies: lowest
+          - php: '8.3'
+            dependencies: highest
+          # Highest versions on PHP 8.4 resolve to Symfony 8.
+          - php: '8.4'
+            dependencies: highest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          if [ "${{ matrix.dependencies }}" = "lowest" ]; then
+            composer update --prefer-lowest --prefer-stable --no-interaction --no-progress
+          else
+            composer update --no-interaction --no-progress
+          fi
+
+      - name: Show resolved versions
+        run: composer show symfony/framework-bundle easycorp/easyadmin-bundle doctrine/orm doctrine/dbal twig/twig | grep -E '^(name|versions)'
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: PHPUnit
+        run: vendor/bin/phpunit
+
+  browser:
+    name: Browser (Playwright, demo app)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      # Same throwaway credentials as demo-compose.yaml and demo/.env.dev.
+      database:
+        image: mariadb:11.4
+        env:
+          MARIADB_DATABASE: meaga_demo
+          MARIADB_USER: meaga
+          MARIADB_PASSWORD: meaga_dev
+          MARIADB_RANDOM_ROOT_PASSWORD: '1'
+        ports:
+          - 3317:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=3s
+          --health-timeout=3s
+          --health-retries=30
+    env:
+      CI: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_mysql, intl
+          coverage: none
+
+      - name: Install the demo app
+        working-directory: demo
+        run: composer install --no-interaction --no-progress
+
+      - name: Create the schema and seed data
+        working-directory: demo
+        run: |
+          php bin/console doctrine:schema:update --force --no-interaction
+          php bin/console app:seed-demo --reset
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install Playwright
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run browser tests
+        working-directory: e2e
+        run: npx playwright test
+
+      - name: Upload the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            e2e/playwright-report
+            e2e/test-results
+          retention-days: 7

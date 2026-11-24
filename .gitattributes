@@ -1,4 +1,5 @@
 # Exclude from dist archives (composer install --prefer-dist)
+/.github            export-ignore
 /demo               export-ignore
 /demo-compose.yaml  export-ignore
 /e2e                export-ignore
