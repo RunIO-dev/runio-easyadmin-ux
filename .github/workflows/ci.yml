@@ -48,7 +48,7 @@ jobs:
           fi
 
       - name: Show resolved versions
-        run: composer show symfony/framework-bundle easycorp/easyadmin-bundle doctrine/orm doctrine/dbal twig/twig | grep -E '^(name|versions)'
+        run: composer show | grep -E '^(symfony/framework-bundle|easycorp/easyadmin-bundle|doctrine/orm|doctrine/dbal|twig/twig) '
 
       - name: Validate composer.json
         run: composer validate --strict
