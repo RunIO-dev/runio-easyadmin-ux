@@ -1,0 +1,8 @@
+# Exclude from dist archives (composer install --prefer-dist)
+/demo               export-ignore
+/demo-compose.yaml  export-ignore
+/e2e                export-ignore
+/tests              export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/phpunit.xml.dist   export-ignore

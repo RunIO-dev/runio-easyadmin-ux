@@ -1,0 +1,13 @@
+{% if items is empty %}
+    <p class="ux-widget-empty">{{ empty_message is null ? 'Nothing to show.'|trans({}, 'RunioEasyAdminUx') : empty_message|trans }}</p>
+{% else %}
+    <ul class="ux-widget-list">
+        {% for item in items %}
+            <li>
+                {% if item.url %}<a href="{{ item.url }}">{{ item.label }}</a>{% else %}<span>{{ item.label }}</span>{% endif %}
+                {% if item.meta is not null %}<span class="ux-widget-list-meta">{{ item.meta }}</span>{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if more_url %}<a href="{{ more_url }}" class="ux-widget-more">{{ 'View all'|trans({}, 'RunioEasyAdminUx') }}</a>{% endif %}

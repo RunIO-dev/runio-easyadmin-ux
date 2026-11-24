@@ -1,0 +1,23 @@
+# Development-only database for the demo app. Bound to localhost on a dedicated port.
+name: meaga-demo
+
+services:
+  database:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: meaga_demo
+      MARIADB_USER: meaga
+      MARIADB_PASSWORD: meaga_dev
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    ports:
+      - "127.0.0.1:3317:3306"
+    volumes:
+      - database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  database:

@@ -1,0 +1,1035 @@
+.content-top .navbar-custom-menu {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.ux-palette-trigger,
+.ux-layout-button {
+    align-items: center;
+    background: transparent;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 6px;
+    color: inherit;
+    display: inline-flex;
+    font-size: 13px;
+    gap: 8px;
+    min-block-size: 32px;
+    padding: 4px 10px;
+    white-space: nowrap;
+}
+
+.ux-palette-trigger:hover,
+.ux-layout-button:hover {
+    background: var(--gray-100, rgba(127, 127, 127, .12));
+}
+
+.ux-palette-trigger kbd {
+    background: transparent;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 4px;
+    color: inherit;
+    font-size: 11px;
+    opacity: .7;
+    padding: 1px 4px;
+}
+
+.ux-layout-option {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.ux-layout-glyph {
+    border: 1.5px solid currentColor;
+    border-radius: 3px;
+    display: inline-block;
+    block-size: 14px;
+    inline-size: 18px;
+    flex: none;
+    position: relative;
+}
+
+.ux-layout-glyph::before {
+    background: currentColor;
+    content: '';
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 5px;
+    position: absolute;
+}
+
+.ux-layout-glyph[data-layout='compact']::before {
+    inline-size: 2px;
+}
+
+.ux-layout-glyph[data-layout='topbar']::before {
+    block-size: 4px;
+    inline-size: auto;
+    inset-block: 0 auto;
+    inset-inline: 0;
+}
+
+.ux-layout-glyph[data-layout='focus']::before {
+    display: none;
+}
+
+.ux-palette {
+    background: var(--body-bg, #fff);
+    border: var(--border-width, 1px) solid var(--border-color, #ddd);
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+    color: inherit;
+    inline-size: min(560px, calc(100vw - 32px));
+    margin-block-start: 12vh;
+    padding: 0;
+}
+
+.ux-palette::backdrop {
+    background: rgba(0, 0, 0, .4);
+}
+
+.ux-palette input {
+    background: transparent;
+    border: 0;
+    border-block-end: var(--border-width, 1px) solid var(--border-color, #ddd);
+    color: inherit;
+    font-size: 16px;
+    inline-size: 100%;
+    padding: 14px 16px;
+}
+
+.ux-palette input:focus-visible {
+    outline: 2px solid var(--link-color, currentColor);
+    outline-offset: -2px;
+}
+
+.ux-palette ul[hidden] {
+    display: none;
+}
+
+.ux-palette .ux-palette-empty:empty {
+    display: none;
+}
+
+.ux-sr-only {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+}
+
+.ux-palette ul {
+    list-style: none;
+    margin: 0;
+    max-block-size: 340px;
+    overflow-y: auto;
+    padding: 6px;
+}
+
+.ux-palette li a {
+    align-items: center;
+    border-radius: 6px;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    text-decoration: none;
+}
+
+.ux-palette li[aria-selected='true'] a,
+.ux-palette li a:hover {
+    background: var(--gray-100, rgba(127, 127, 127, .15));
+}
+
+.ux-palette small {
+    opacity: .6;
+}
+
+.ux-palette-empty {
+    opacity: .6;
+    padding: 12px;
+    text-align: center;
+}
+
+.ux-table-toolbar {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    justify-content: space-between;
+    margin-block-end: 12px;
+}
+
+.ux-views,
+.ux-table-controls {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-inline-size: 0;
+}
+
+.ux-view,
+.ux-table-button,
+.ux-density button {
+    align-items: center;
+    background: transparent;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 6px;
+    color: inherit;
+    display: inline-flex;
+    font-size: 13px;
+    gap: 4px;
+    min-block-size: 30px;
+    padding: 3px 10px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.ux-view a {
+    color: inherit;
+    max-inline-size: 180px;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+}
+
+.ux-view.is-active {
+    background: var(--gray-100, rgba(127, 127, 127, .15));
+    font-weight: 600;
+}
+
+.ux-view form {
+    display: inline-flex;
+}
+
+.ux-view form button {
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    line-height: 1;
+    opacity: .6;
+    padding: 2px 4px;
+}
+
+.ux-view form button:hover,
+.ux-view form button:focus-visible {
+    opacity: 1;
+}
+
+.ux-density {
+    display: inline-flex;
+}
+
+.ux-density button {
+    border-radius: 0;
+    margin-inline-start: calc(-1 * var(--border-width));
+}
+
+.ux-density button:first-of-type {
+    border-end-start-radius: 6px;
+    border-start-start-radius: 6px;
+    margin-inline-start: 0;
+}
+
+.ux-density button:last-of-type {
+    border-end-end-radius: 6px;
+    border-start-end-radius: 6px;
+}
+
+.ux-density button[aria-pressed='true'] {
+    background: var(--gray-100, rgba(127, 127, 127, .15));
+    font-weight: 600;
+}
+
+.ux-save-view {
+    inline-size: 280px;
+    padding: 12px;
+}
+
+.ux-save-view label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-block-end: 4px;
+}
+
+.ux-save-view p {
+    font-size: 12px;
+    margin-block: 6px 10px;
+    opacity: .7;
+    white-space: normal;
+}
+
+.ux-columns-menu {
+    inline-size: 300px;
+    padding: 8px;
+}
+
+.ux-columns {
+    list-style: none;
+    margin: 0;
+    max-block-size: 320px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.ux-columns li {
+    align-items: center;
+    border-radius: 6px;
+    display: flex;
+    gap: 6px;
+    padding: 3px 4px;
+}
+
+.ux-columns li:hover {
+    background: var(--gray-100, rgba(127, 127, 127, .12));
+}
+
+.ux-columns li.is-dragging {
+    opacity: .5;
+}
+
+.ux-columns label {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    margin: 0;
+    min-inline-size: 0;
+}
+
+.ux-columns label span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ux-columns label .form-check-input {
+    flex: none;
+    margin: 0;
+}
+
+.ux-columns button {
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    inline-size: 24px;
+    padding: 2px;
+}
+
+.ux-columns button:hover {
+    background: var(--gray-200, rgba(127, 127, 127, .25));
+}
+
+.ux-grip {
+    cursor: grab;
+    font-size: 12px;
+    letter-spacing: -2px;
+    opacity: .5;
+}
+
+.ux-columns-actions {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-block-start: 8px;
+}
+
+.batch-actions {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.ux-selection-count {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.ux-table td[data-column] {
+    position: relative;
+}
+
+/* Reserves room for the pencil in every row, so it never covers values or misaligns columns. */
+@media (min-width: 768px) {
+    .ux-table[data-ux-editing] td[data-column]:not(.has-switch) {
+        padding-inline-end: 34px;
+    }
+}
+
+.ux-cell-edit {
+    background: var(--body-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 4px;
+    color: inherit;
+    font-size: 12px;
+    inset-block-start: 50%;
+    inset-inline-end: 4px;
+    line-height: 1;
+    opacity: 0;
+    padding: 4px 6px;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.ux-table tr:hover .ux-cell-edit,
+.ux-cell-edit:focus-visible {
+    opacity: 1;
+}
+
+.ux-table td.is-editing {
+    color: transparent;
+}
+
+.ux-table td.is-editing > :not(.ux-cell-editor) {
+    visibility: hidden;
+}
+
+.ux-cell-editor {
+    align-items: center;
+    background: var(--body-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow-lg);
+    color: var(--text-color, #212529);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    inset-block-start: 2px;
+    inset-inline-start: 2px;
+    min-inline-size: 300px;
+    padding: 4px;
+    position: absolute;
+    z-index: 5;
+}
+
+.ux-cell-editor.is-flipped {
+    inset-inline-end: 2px;
+    inset-inline-start: auto;
+}
+
+.ux-cell-editor .form-control,
+.ux-cell-editor .form-select {
+    flex: 1;
+    inline-size: auto;
+    min-inline-size: 120px;
+}
+
+.ux-cell-error {
+    color: var(--color-danger, #b42318);
+    flex-basis: 100%;
+    font-size: 12px;
+    margin: 0;
+    white-space: normal;
+}
+
+.ux-cell-error:empty {
+    display: none;
+}
+
+.ux-drawer {
+    background: var(--body-bg, #fff);
+    block-size: 100dvh;
+    border: 0;
+    border-inline-start: var(--border-width, 1px) solid var(--border-color, #ddd);
+    box-shadow: var(--shadow-lg);
+    color: inherit;
+    /* 100% of the viewport without its scrollbar; 100vw would push the drawer's edge off-screen. */
+    inline-size: min(720px, 100%);
+    margin-block: 0;
+    margin-inline: auto 0;
+    max-block-size: none;
+    max-inline-size: none;
+    padding: 0;
+}
+
+.ux-drawer[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+.ux-drawer::backdrop {
+    background: rgba(0, 0, 0, .4);
+}
+
+.ux-drawer header {
+    align-items: center;
+    border-block-end: var(--border-width, 1px) solid var(--border-color, #ddd);
+    display: flex;
+    gap: 12px;
+    padding: 10px 16px;
+}
+
+.ux-drawer header strong {
+    flex: 1;
+}
+
+.ux-drawer header button {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    padding: 2px 8px;
+}
+
+.ux-drawer iframe {
+    border: 0;
+    flex: 1;
+    inline-size: 100%;
+}
+
+body[data-ux-drawer] .sidebar-wrapper,
+body[data-ux-drawer] .responsive-header,
+body[data-ux-drawer] .content-top,
+body[data-ux-drawer] .action-saveAndContinue {
+    display: none;
+}
+
+/* EasyAdmin stretches the body to the full height, which adds a stray scrollbar in the frame. */
+body[data-ux-drawer] {
+    block-size: auto;
+    min-block-size: 0;
+}
+
+body[data-ux-drawer] .wrapper {
+    display: block;
+}
+
+body[data-ux-drawer] .main-content {
+    margin: 0;
+    max-inline-size: none;
+}
+
+/* Below this width EasyAdmin renders rows as cards, where tapping a row opens the drawer. */
+@media (max-width: 767px) {
+    .ux-cell-edit {
+        display: none;
+    }
+}
+
+@media (hover: none) {
+    .ux-cell-edit {
+        opacity: 1;
+    }
+}
+
+.ux-dashboard-toolbar {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-block-end: 12px;
+}
+
+.ux-dashboard-editbar {
+    align-items: center;
+    display: none;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ux-dashboard-editbar-end {
+    display: flex;
+    gap: 8px;
+    margin-inline-start: auto;
+}
+
+.ux-dashboard.is-editing .ux-dashboard-editbar {
+    display: flex;
+}
+
+.ux-dashboard.is-editing .ux-dashboard-customize {
+    display: none;
+}
+
+.ux-dashboard-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ux-widget {
+    background: var(--body-bg);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    grid-column: span 2;
+    min-inline-size: 0;
+    padding: 14px 16px;
+}
+
+.ux-widget[data-size='small'] {
+    grid-column: span 1;
+}
+
+.ux-widget[data-size='large'] {
+    grid-column: span 3;
+}
+
+.ux-widget[data-size='full'] {
+    grid-column: 1 / -1;
+}
+
+.ux-widget-header {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-block-end: 10px;
+}
+
+.ux-widget-header h2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ux-widget-controls {
+    align-items: center;
+    display: none;
+    flex: none;
+    gap: 2px;
+}
+
+.ux-dashboard.is-editing .ux-widget-controls {
+    display: flex;
+    flex: 1 1 100%;
+}
+
+/* While editing, controls get their own row so narrow widgets keep a readable title. */
+.ux-dashboard.is-editing .ux-widget-header {
+    flex-wrap: wrap;
+}
+
+.ux-dashboard.is-editing .ux-widget-header h2 {
+    flex: 1 1 100%;
+}
+
+.ux-widget-controls .ux-grip {
+    margin-inline-end: auto;
+}
+
+.ux-dashboard.is-editing .ux-widget {
+    border-style: dashed;
+    cursor: grab;
+}
+
+.ux-widget.is-dragging {
+    opacity: .5;
+}
+
+.ux-widget-controls select {
+    inline-size: auto;
+    padding-block: 2px;
+}
+
+.ux-widget-controls button {
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    inline-size: 26px;
+    padding: 2px;
+}
+
+.ux-widget-controls button:hover {
+    background: var(--gray-200, rgba(127, 127, 127, .25));
+}
+
+.ux-dashboard-empty {
+    grid-column: 1 / -1;
+    opacity: .7;
+    padding: 24px;
+    text-align: center;
+}
+
+.ux-widget ~ .ux-dashboard-empty {
+    display: none;
+}
+
+/* Widget data often mixes languages (an English "2 left" on an Arabic page), so each piece
+   takes its direction from its own first letter instead of the page. */
+.ux-widget-list li > *,
+.ux-metric-value,
+.ux-metric-hint,
+.ux-bar dt,
+.ux-bar-value {
+    unicode-bidi: plaintext;
+}
+
+/* Plaintext text also aligns by its own direction, so these shrink to their content and the
+   layout places them on the page's starting side instead. */
+.ux-metric {
+    align-items: flex-start;
+}
+
+.ux-bar dt {
+    justify-self: start;
+    max-inline-size: 100%;
+}
+
+.ux-widget-error,
+.ux-widget-pending,
+.ux-widget-empty {
+    margin: 0;
+    opacity: .7;
+}
+
+.ux-widget-error {
+    color: var(--color-danger, #b42318);
+    opacity: 1;
+}
+
+.ux-metric {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-decoration: none;
+}
+
+.ux-metric-value {
+    font-size: 30px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 650;
+    line-height: 1.15;
+}
+
+.ux-metric-hint {
+    font-size: 13px;
+    opacity: .7;
+}
+
+a.ux-metric:hover .ux-metric-value {
+    text-decoration: underline;
+}
+
+.ux-widget-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ux-widget-list li {
+    align-items: baseline;
+    border-block-end: var(--border-width) solid var(--border-color);
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    padding-block: 6px;
+    padding-inline: 0;
+}
+
+.ux-widget-list a,
+.ux-widget-list li > span:first-child {
+    display: inline;
+    font-weight: inherit;
+    min-inline-size: 0;
+    overflow: hidden;
+    padding: 0;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ux-widget-list a:hover,
+.ux-widget-list a:focus-visible {
+    text-decoration: underline;
+}
+
+.ux-widget-list li:last-child {
+    border-block-end: 0;
+}
+
+.ux-widget-list-meta {
+    flex: none;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    opacity: .75;
+}
+
+.ux-widget-more {
+    display: inline-block;
+    font-size: 13px;
+    margin-block-start: 8px;
+}
+
+.ux-bars {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+}
+
+.ux-bar {
+    align-items: center;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: minmax(80px, 30%) 1fr;
+}
+
+.ux-bar dt {
+    font-weight: 400;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ux-bar dd {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin: 0;
+}
+
+.ux-bar-track {
+    background: var(--gray-100, rgba(127, 127, 127, .15));
+    border-radius: 4px;
+    block-size: 10px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.ux-bar-fill {
+    background: var(--link-color, #2563eb);
+    block-size: 100%;
+    display: block;
+}
+
+.ux-bar-value {
+    font-variant-numeric: tabular-nums;
+    min-inline-size: 3ch;
+    text-align: end;
+}
+
+@media (max-width: 1199px) {
+    .ux-dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ux-widget[data-size='medium'],
+    .ux-widget[data-size='large'] {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767px) {
+    .ux-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ux-widget[data-size] {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Below this width EasyAdmin renders rows as cards, where row density doesn't apply. */
+@media (max-width: 767px) {
+    .ux-density {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .ux-table .datagrid-scroll {
+        max-block-size: max(320px, calc(100dvh - 300px));
+        overflow: auto;
+    }
+
+    .ux-table .datagrid thead th {
+        background: var(--body-bg);
+        box-shadow: inset 0 -1px 0 var(--border-color);
+        inset-block-start: 0;
+        position: sticky;
+        z-index: 2;
+    }
+
+    .ux-table[data-density='compact'] .datagrid td {
+        padding-block: 3px;
+    }
+
+    .ux-table[data-density='spacious'] .datagrid td {
+        padding-block: 18px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .ux-palette-trigger kbd,
+    .content-top .navbar-custom-menu .user-menu-wrapper {
+        display: none;
+    }
+
+    /* visually hidden, but still part of the button's accessible name */
+    .ux-layout-current {
+        block-size: 1px;
+        clip-path: inset(50%);
+        inline-size: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 992px) {
+    body[data-ux-layout='topbar'] .ea-sidebar-header,
+    body[data-ux-layout='topbar'] .ea-sidebar-logo {
+        align-items: center;
+        block-size: auto;
+        display: flex;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-logo .logo {
+        block-size: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    body[data-ux-layout='topbar'] .wrapper,
+    body[data-ux-layout='focus'] .wrapper {
+        display: block;
+    }
+
+    body[data-ux-layout='topbar'] .ea-layout-toggle-sidebar,
+    body[data-ux-layout='focus'] .ea-layout-toggle-sidebar,
+    body[data-ux-layout='compact'] .ea-layout-toggle-sidebar,
+    body[data-ux-layout='focus'] .sidebar-wrapper {
+        display: none;
+    }
+
+    body[data-ux-layout='focus'] .main-content {
+        margin-inline: auto;
+        margin-block: var(--main-content-gap);
+        max-inline-size: 1280px;
+    }
+
+    body[data-ux-layout='topbar'] .sidebar-wrapper {
+        block-size: auto;
+        inset-block-start: 0;
+        position: sticky;
+        z-index: 1030;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar {
+        align-items: center;
+        block-size: auto;
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        inline-size: 100%;
+        max-block-size: none;
+        max-inline-size: none;
+        min-block-size: 52px;
+        overflow: visible;
+        overflow-block: visible;
+        overflow-inline: visible;
+        padding: 6px 16px;
+        position: static;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-header {
+        flex: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar nav,
+    body[data-ux-layout='topbar'] .ea-sidebar-menu {
+        align-items: center;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+        min-inline-size: 0;
+        overflow: visible;
+        overflow-block: visible;
+        overflow-inline: visible;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-group,
+    body[data-ux-layout='topbar'] .ea-sidebar-group-items {
+        align-items: center;
+        display: flex;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-group + .ea-sidebar-group {
+        margin: 0;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-group-label {
+        display: none;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-item {
+        position: relative;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-item-link {
+        white-space: nowrap;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-group-items > .ea-sidebar-item > .ea-sidebar-submenu {
+        background: var(--sidebar-bg);
+        border: var(--border-width) solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+        display: none;
+        inset-block-start: 100%;
+        inset-inline-start: 0;
+        min-inline-size: 200px;
+        padding: 4px 8px;
+        position: absolute;
+        z-index: 1040;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-group-items > .ea-sidebar-item:hover > .ea-sidebar-submenu,
+    body[data-ux-layout='topbar'] .ea-sidebar-group-items > .ea-sidebar-item:focus-within > .ea-sidebar-submenu,
+    body[data-ux-layout='topbar'] .ea-sidebar-group-items > .ea-sidebar-item.is-expanded > .ea-sidebar-submenu {
+        display: block;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-submenu-inner {
+        overflow: visible;
+    }
+
+    body[data-ux-layout='topbar'] .ea-sidebar-submenu-items {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body[data-ux-layout='topbar'] .main-content {
+        margin-inline-start: var(--main-content-gap);
+    }
+}
+
+/* Touch screens can't drag these cards, so they use the move buttons, sized for fingers. */
+@media (pointer: coarse) {
+    .ux-widget-controls .ux-grip {
+        visibility: hidden;
+    }
+
+    .ux-widget-controls button {
+        block-size: 40px;
+        inline-size: 40px;
+    }
+}

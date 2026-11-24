@@ -1,0 +1,4 @@
+{% if url %}<a href="{{ url }}" class="ux-metric">{% else %}<div class="ux-metric">{% endif %}
+    <span class="ux-metric-value">{{ value }}</span>
+    {% if hint %}<span class="ux-metric-hint">{{ hint|trans }}</span>{% endif %}
+{% if url %}</a>{% else %}</div>{% endif %}

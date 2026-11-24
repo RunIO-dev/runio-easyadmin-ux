@@ -1,0 +1,3 @@
+runio_easyadmin_ux:
+    resource: '@RunioEasyAdminUxBundle/config/routes.php'
+    prefix: /admin

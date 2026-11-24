@@ -1,0 +1,16 @@
+@view-transition {
+    navigation: auto;
+}
+
+/* Uses the root transition on purpose: a view-transition-name on the content would create a
+   stacking context that traps EasyAdmin's modals underneath their body-level backdrop. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @view-transition {
+        navigation: none;
+    }
+}

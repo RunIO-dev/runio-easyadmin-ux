@@ -1,0 +1,84 @@
+{% trans_default_domain 'RunioEasyAdminUx' %}
+{% macro controls(widget, sizes) %}
+    {% trans_default_domain 'RunioEasyAdminUx' %}
+    {% set label = widget.label|trans({}, 'messages') %}
+    <div class="ux-widget-controls">
+        <span class="ux-grip" aria-hidden="true">⋮⋮</span>
+        <select class="form-select form-select-sm" autocomplete="off" data-ux-widget-size aria-label="{{ 'Size'|trans }}: {{ label }}">
+            {% for size in sizes %}
+                <option value="{{ size }}" {{ size == widget.size ? 'selected' }}>{{ size|capitalize|trans }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" data-ux-widget-move="-1" aria-label="{{ 'Move earlier'|trans }}: {{ label }}">↑</button>
+        <button type="button" data-ux-widget-move="1" aria-label="{{ 'Move later'|trans }}: {{ label }}">↓</button>
+        <button type="button" data-ux-widget-remove aria-label="{{ 'Remove'|trans }}: {{ label }}">&times;</button>
+    </div>
+{% endmacro %}
+{% import _self as ux %}
+<div class="ux-dashboard"
+     data-ux-moved="{{ 'Moved %label% to position %position% of %count%.'|trans }}"
+     data-ux-removed="{{ '%label% removed.'|trans }}"
+     data-ux-added="{{ '%label% added.'|trans }}"
+     data-ux-pending="{{ 'Save to load this widget.'|trans }}"
+     data-ux-discard="{{ 'Discard your unsaved changes?'|trans }}"
+     data-ux-reset="{{ 'Restore the default dashboard?'|trans }}">
+    <form method="post" action="{{ path('runio_ux_dashboard_save') }}" class="ux-dashboard-toolbar">
+        <input type="hidden" name="_token" value="{{ csrf_token(csrf_id) }}">
+        <input type="hidden" name="dashboard" value="{{ dashboard }}">
+        <input type="hidden" name="_return" value="{{ app.request.requestUri }}">
+        {% for id in known %}<input type="hidden" name="known[]" value="{{ id }}">{% endfor %}
+        <div data-ux-dashboard-fields></div>
+
+        <button type="button" class="ux-table-button ux-dashboard-customize" data-ux-dashboard-customize hidden>{{ 'Customize'|trans }}</button>
+
+        <div class="ux-dashboard-editbar">
+            <div class="dropdown">
+                <button type="button" class="ux-table-button" data-bs-toggle="dropdown" aria-expanded="false" data-ux-dashboard-add {{ hidden is empty ? 'disabled' }}>+ {{ 'Add widget'|trans }}</button>
+                <ul class="dropdown-menu" data-ux-dashboard-add-menu>
+                    {% for widget in hidden %}
+                        <li><button type="button" class="dropdown-item" data-ux-add="{{ widget.id }}" data-ux-size="{{ widget.size }}">{{ widget.label|trans({}, 'messages') }}</button></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <span class="ux-sr-only" role="status" data-ux-dashboard-status></span>
+            <span class="ux-dashboard-editbar-end">
+                {# The form has no text fields, so pressing Enter never submits it implicitly. #}
+                <button type="button" class="btn btn-secondary" data-ux-dashboard-cancel>{{ 'Cancel'|trans }}</button>
+                <button type="submit" name="action" value="reset" class="btn btn-secondary" data-ux-dashboard-reset>{{ 'Reset'|trans }}</button>
+                <button type="submit" name="action" value="save" class="btn btn-primary">{{ 'Save'|trans }}</button>
+            </span>
+        </div>
+    </form>
+
+    <div class="ux-dashboard-grid">
+        {% for widget in widgets %}
+            <section class="ux-widget" data-widget="{{ widget.id }}" data-size="{{ widget.size }}" aria-labelledby="{{ csrf_id }}-{{ widget.id }}">
+                <header class="ux-widget-header">
+                    <h2 id="{{ csrf_id }}-{{ widget.id }}">{{ widget.label|trans({}, 'messages') }}</h2>
+                    {{ ux.controls(widget, sizes) }}
+                </header>
+                <div class="ux-widget-body">
+                    {% if widget.failed %}
+                        <p class="ux-widget-error">{{ 'This widget could not be loaded.'|trans }}</p>
+                    {% else %}
+                        {{ widget.html|raw }}
+                    {% endif %}
+                </div>
+            </section>
+        {% endfor %}
+        <p class="ux-dashboard-empty">{{ 'Your dashboard is empty. Use Customize to add widgets.'|trans }}</p>
+    </div>
+
+    {# Copied by the customize mode when a widget is added, then rendered for real after saving. #}
+    {% for widget in hidden %}
+        <template data-ux-widget-template="{{ widget.id }}">
+            <section class="ux-widget is-pending" data-widget="{{ widget.id }}" data-size="{{ widget.size }}" aria-labelledby="{{ csrf_id }}-{{ widget.id }}">
+                <header class="ux-widget-header">
+                    <h2 id="{{ csrf_id }}-{{ widget.id }}">{{ widget.label|trans({}, 'messages') }}</h2>
+                    {{ ux.controls(widget, sizes) }}
+                </header>
+                <div class="ux-widget-body"><p class="ux-widget-pending">{{ 'Save to load this widget.'|trans }}</p></div>
+            </section>
+        </template>
+    {% endfor %}
+</div>

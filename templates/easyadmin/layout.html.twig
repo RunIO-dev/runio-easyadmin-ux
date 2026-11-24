@@ -1,0 +1,75 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/runioeasyadminux/ux.css') }}">
+    {# Not loaded in the edit drawer: a cross-document transition inside its iframe crashes Chromium. #}
+    {% if not app.request.query.has('ux_drawer') %}
+        <link rel="stylesheet" href="{{ asset('bundles/runioeasyadminux/ux-transitions.css') }}">
+    {% endif %}
+{% endblock %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    {# Only links inside this dashboard are prefetched, because a GET request elsewhere may have side effects. #}
+    {% set dashboard_path = path(ea.dashboardRouteName) %}
+    {% set speculation_rules = {
+        prefetch: [{
+            where: {and: [
+                {or: [{href_matches: dashboard_path}, {href_matches: dashboard_path ~ '/*'}, {href_matches: dashboard_path ~ '?*'}]},
+                {selector_matches: '.ea-sidebar-item-link[href], .page-link[href]'},
+                {not: {href_matches: '/*logout*'}},
+                {not: {href_matches: '/*\\?*_switch_user=*'}},
+                {not: {selector_matches: '[data-ux-no-prefetch]'}},
+            ]},
+            eagerness: 'moderate',
+        }],
+    } %}
+    {% guard function csp_nonce %}
+        <script type="speculationrules" nonce="{{ csp_nonce('script') }}">{{ speculation_rules|json_encode(constant('JSON_HEX_TAG'))|raw }}</script>
+    {% else %}
+        <script type="speculationrules">{{ speculation_rules|json_encode(constant('JSON_HEX_TAG'))|raw }}</script>
+    {% endguard %}
+    <script src="{{ asset('bundles/runioeasyadminux/ux.js') }}" defer{% guard function csp_nonce %} nonce="{{ csp_nonce('script') }}"{% endguard %}></script>
+{% endblock %}
+
+{% block body_attr %}{{ parent() }} data-ux-layout="{{ runio_ux_layout().id }}"{% if app.request.query.has('ux_drawer') %} data-ux-drawer{% endif %}{% endblock %}
+
+{% block javascript_page_layout %}
+    <script src="{{ asset('bundles/runioeasyadminux/layout-boot.js') }}"{% guard function csp_nonce %} nonce="{{ csp_nonce('script') }}"{% endguard %}></script>
+    {{ parent() }}
+{% endblock %}
+
+{% block header_custom_menu %}
+    {% trans_default_domain 'RunioEasyAdminUx' %}
+    <button type="button" class="ux-palette-trigger" data-ux-palette-open
+            data-ux-label="{{ 'Command palette'|trans }}"
+            data-ux-placeholder="{{ 'Go to…'|trans }}"
+            data-ux-empty="{{ 'No results'|trans }}">
+        <span>{{ 'Go to'|trans }}</span><kbd aria-hidden="true">Ctrl K</kbd>
+    </button>
+
+    {% if app.user %}
+        <div class="dropdown ux-layout-switcher">
+            <button type="button" class="ux-layout-button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="ux-layout-glyph" data-layout="{{ runio_ux_layout().id }}" aria-hidden="true"></span>
+                <span class="ux-sr-only">{{ 'Change layout'|trans }}:</span>
+                <span class="ux-layout-current">{{ runio_ux_layout().label|trans }}</span>
+            </button>
+            <form method="post" action="{{ path('runio_ux_layout_save') }}" class="dropdown-menu dropdown-menu-end">
+                <input type="hidden" name="_token" value="{{ csrf_token(runio_ux_layout_csrf_id()) }}">
+                <input type="hidden" name="_return" value="{{ app.request.requestUri }}">
+                {% for layout in runio_ux_layouts() %}
+                    <button type="submit" name="layout" value="{{ layout.id }}"
+                            class="dropdown-item ux-layout-option {{ layout.id == runio_ux_layout().id ? 'active' }}"
+                            {% if layout.id == runio_ux_layout().id %}aria-current="true"{% endif %}>
+                        <span class="ux-layout-glyph" data-layout="{{ layout.id }}" aria-hidden="true"></span>
+                        <span>{{ layout.label|trans }}</span>
+                    </button>
+                {% endfor %}
+            </form>
+        </div>
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}

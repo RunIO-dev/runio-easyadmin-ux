@@ -1,0 +1,15 @@
+{% if bars is empty %}
+    <p class="ux-widget-empty">{{ 'Nothing to show.'|trans({}, 'RunioEasyAdminUx') }}</p>
+{% else %}
+    <dl class="ux-bars">
+        {% for bar in bars %}
+            <div class="ux-bar">
+                <dt>{{ bar.label }}</dt>
+                <dd>
+                    <span class="ux-bar-track" aria-hidden="true"><span class="ux-bar-fill" style="inline-size: {{ bar.percent }}%"></span></span>
+                    <span class="ux-bar-value">{{ bar.value }}</span>
+                </dd>
+            </div>
+        {% endfor %}
+    </dl>
+{% endif %}

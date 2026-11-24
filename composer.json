@@ -1,0 +1,52 @@
+{
+    "name": "runio/easyadmin-ux",
+    "description": "Switchable layouts and a modern UX layer for EasyAdmin 5.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": ["symfony", "easyadmin", "admin", "ux", "layouts", "inline-editing", "datagrid", "rtl", "arabic", "bundle"],
+    "homepage": "https://github.com/RunIO-dev/runio-easyadmin-ux",
+    "authors": [
+        {
+            "name": "Amer Malik Mohammed",
+            "email": "info@runio.dev",
+            "homepage": "https://github.com/RunIO-dev"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/RunIO-dev/runio-easyadmin-ux/issues",
+        "source": "https://github.com/RunIO-dev/runio-easyadmin-ux"
+    },
+    "require": {
+        "php": ">=8.2",
+        "doctrine/dbal": "^3.7|^4.0",
+        "doctrine/doctrine-bundle": "^2.11|^3.0",
+        "doctrine/orm": "^2.20|^3.6",
+        "easycorp/easyadmin-bundle": "^5.10",
+        "psr/log": "^1.1|^2.0|^3.0",
+        "symfony/config": "^6.4|^7.0|^8.0",
+        "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+        "symfony/event-dispatcher": "^6.4|^7.0|^8.0",
+        "symfony/framework-bundle": "^6.4|^7.0|^8.0",
+        "symfony/http-foundation": "^6.4|^7.0|^8.0",
+        "symfony/http-kernel": "^6.4|^7.0|^8.0",
+        "symfony/security-bundle": "^6.4|^7.0|^8.0",
+        "symfony/security-csrf": "^6.4|^7.0|^8.0",
+        "symfony/twig-bundle": "^6.4|^7.0|^8.0",
+        "twig/twig": "^3.12"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Runio\\EasyAdminUxBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Runio\\EasyAdminUxBundle\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

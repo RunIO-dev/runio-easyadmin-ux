@@ -1,0 +1,108 @@
+{% extends '@!EasyAdmin/crud/index.html.twig' %}
+
+{# Runs before the parent template, so its headers, rows, and sort menu all use these columns. #}
+{% set ux_table_applied = ux_table is defined ? runio_ux_apply_table(entities, ux_table) : false %}
+
+{% macro state(table) %}
+    <input type="hidden" name="_token" value="{{ csrf_token(table.csrf_id) }}">
+    <input type="hidden" name="crud" value="{{ table.crud }}">
+    <input type="hidden" name="view" value="{{ table.view }}">
+    <input type="hidden" name="_return" value="{{ app.request.requestUri }}">
+{% endmacro %}
+
+{% block main %}
+    {% if ux_table is defined %}
+        {% import _self as ux %}
+        {% set d = 'RunioEasyAdminUx' %}
+        <div class="ux-table" data-density="{{ ux_table.density }}"
+             data-ux-selected="{{ '%count% selected'|trans({}, d) }}"
+             data-ux-clear="{{ 'Clear selection'|trans({}, d) }}"
+             {% if ux_table.editing %}
+             data-ux-editing
+             data-ux-edit="{{ 'Edit'|trans({}, d) }}"
+             data-ux-save="{{ 'Save'|trans({}, d) }}"
+             data-ux-cancel="{{ 'Cancel'|trans({}, d) }}"
+             data-ux-close="{{ 'Close'|trans({}, d) }}"
+             data-ux-full-page="{{ 'Open full page'|trans({}, d) }}"
+             data-ux-drawer-title="{{ 'Edit record'|trans({}, d) }}"
+             data-ux-discard="{{ 'Discard your unsaved changes?'|trans({}, d) }}"
+             data-ux-conflict="{{ 'Someone else changed this value. Save again to replace it.'|trans({}, d) }}"
+             data-ux-failed="{{ 'Could not save this change.'|trans({}, d) }}"
+             {% endif %}>
+            <div class="ux-table-toolbar">
+                <nav class="ux-views" aria-label="{{ 'Saved views'|trans({}, d) }}">
+                    <a href="{{ ux_table.all_url }}" class="ux-view {{ ux_table.view is null ? 'is-active' }}" {% if ux_table.view is null %}aria-current="true"{% endif %}>{{ 'All records'|trans({}, d) }}</a>
+                    {% for view in ux_table.views %}
+                        <span class="ux-view {{ view.active ? 'is-active' }}">
+                            <a href="{{ view.url }}" {% if view.active %}aria-current="true"{% endif %}>{{ view.name }}</a>
+                            <form method="post" action="{{ path('runio_ux_table_save') }}" data-ux-confirm="{{ 'Delete this saved view?'|trans({}, d) }}">
+                                {{ ux.state(ux_table) }}
+                                <input type="hidden" name="action" value="view_delete">
+                                <input type="hidden" name="target" value="{{ view.id }}">
+                                <button type="submit" aria-label="{{ 'Delete view'|trans({}, d) }}: {{ view.name }}">&times;</button>
+                            </form>
+                        </span>
+                    {% endfor %}
+                    <div class="dropdown">
+                        <button type="button" class="ux-table-button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">+ {{ 'Save view'|trans({}, d) }}</button>
+                        <form method="post" action="{{ path('runio_ux_table_save') }}" class="dropdown-menu ux-save-view">
+                            {{ ux.state(ux_table) }}
+                            <input type="hidden" name="action" value="view_save">
+                            <input type="hidden" name="query" value="{{ app.request.queryString }}">
+                            <label for="ux-view-name">{{ 'View name'|trans({}, d) }}</label>
+                            <input id="ux-view-name" class="form-control" name="name" maxlength="60" required>
+                            <p>{{ 'Saves the current search, filters, sort, columns, and density.'|trans({}, d) }}</p>
+                            <button type="submit" class="btn btn-primary">{{ 'Save'|trans({}, d) }}</button>
+                        </form>
+                    </div>
+                </nav>
+
+                <div class="ux-table-controls">
+                    <form method="post" action="{{ path('runio_ux_table_save') }}" class="ux-density" role="group" aria-label="{{ 'Row density'|trans({}, d) }}">
+                        {{ ux.state(ux_table) }}
+                        <input type="hidden" name="action" value="density">
+                        {% for density in ux_table.densities %}
+                            <button type="submit" name="density" value="{{ density }}" aria-pressed="{{ density == ux_table.density ? 'true' : 'false' }}">{{ density|capitalize|trans({}, d) }}</button>
+                        {% endfor %}
+                    </form>
+
+                    {% if ux_table.columns is not empty %}
+                        <div class="dropdown">
+                            <button type="button" class="ux-table-button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">{{ 'Columns'|trans({}, d) }}</button>
+                            <div class="dropdown-menu dropdown-menu-end ux-columns-menu">
+                                <form method="post" action="{{ path('runio_ux_table_save') }}">
+                                    {{ ux.state(ux_table) }}
+                                    <input type="hidden" name="action" value="columns">
+                                    <ul class="ux-columns">
+                                        {% for column in ux_table.columns %}
+                                            {% set label = column.label|trans|striptags %}
+                                            <li draggable="true" data-column="{{ column.property }}">
+                                                <span class="ux-grip" aria-hidden="true">⋮⋮</span>
+                                                <label>
+                                                    <input type="checkbox" class="form-check-input" name="visible[]" value="{{ column.property }}" {{ column.visible ? 'checked' }}>
+                                                    <span>{{ label }}</span>
+                                                </label>
+                                                <input type="hidden" name="order[]" value="{{ column.property }}">
+                                                <button type="button" data-ux-move="up" aria-label="{{ 'Move up'|trans({}, d) }}: {{ label }}">↑</button>
+                                                <button type="button" data-ux-move="down" aria-label="{{ 'Move down'|trans({}, d) }}: {{ label }}">↓</button>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="ux-columns-actions">
+                                        {# Apply comes first because pressing Enter activates a form's first submit button. #}
+                                        <button type="submit" class="btn btn-primary">{{ 'Apply'|trans({}, d) }}</button>
+                                        <button type="submit" name="action" value="reset" class="btn btn-secondary">{{ 'Reset'|trans({}, d) }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

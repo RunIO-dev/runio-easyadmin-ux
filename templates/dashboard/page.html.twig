@@ -1,0 +1,7 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}{{ (dashboard_title ?? 'Dashboard')|trans }}{% endblock %}
+
+{% block main %}
+    {{ runio_ux_dashboard(dashboard_name ?? 'main') }}
+{% endblock %}

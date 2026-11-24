@@ -1,0 +1,31 @@
+security:
+    password_hashers:
+        # Demo-only accounts. Never use plaintext hashing in a real application.
+        Symfony\Component\Security\Core\User\InMemoryUser: plaintext
+
+    providers:
+        demo_users:
+            memory:
+                users:
+                    ana: { password: demo, roles: [ROLE_ADMIN, ROLE_MANAGER] }
+                    sam: { password: demo, roles: [ROLE_ADMIN] }
+
+    firewalls:
+        dev:
+            pattern: ^/(_profiler(/|$)|(_wdt|assets|build|bundles)/)
+            security: false
+        main:
+            lazy: true
+            provider: demo_users
+            form_login:
+                login_path: demo_login
+                check_path: demo_login
+                default_target_path: admin
+                enable_csrf: true
+            logout:
+                path: demo_logout
+                target: demo_login
+
+    access_control:
+        - { path: ^/login$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
